@@ -1,0 +1,274 @@
+openapi: 3.0.3
+info:
+  title: list - API
+  description: |-
+
+  version: 1.0.11
+
+tags:
+  - name: item
+    description: Stuff you have to do :33
+  - name: list
+    description: List of Stuff you have to do :33
+
+paths:
+  /list/{list_id}/item:
+    post:
+      tags:
+        - item
+      summary: Create new item
+      description: Create new item in existing list
+      operationId: createPet
+      parameters:
+        - name: list_id
+          in: path
+          description: ID of List in which the item should added
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: create a new item item in a list
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/item'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/item'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/item'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/item'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: item not found
+        '422':
+          description: Validation exception
+		'500':
+		  description: Internal Server Error
+
+  /list/{list_id}/item/{item_id}:
+    patch:
+      tags:
+        - item
+      summary: Update item
+      description: Multiple status values can be provided with comma separated strings
+      operationId: findPetsByStatus
+      parameters:
+        - name: list_id
+          in: path
+          description: ID of List in which the item should added
+          required: true
+          schema:
+            type: string
+        - name: item_id
+          in: path
+          description: ID of item which one should be updated
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/item'          
+            application/xml:
+              schema:
+                items:
+                  $ref: '#/components/schemas/item'
+        '400':
+          description: Invalid status value
+		'404':
+		  description: given ID not found
+		'500':
+		  description: Internal Server Error
+    delete:
+      tags:
+        - item
+      summary: Delete item
+      description: Delete item via ID from List
+      operationId: deleteitem
+      parameters:
+        - name: list_id
+          in: path
+          description: ID of List in which the item should added
+          required: true
+          schema:
+            type: string
+        - name: item_id
+          in: path
+          description: ID of item which one should be updated
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/item'          
+            application/xml:
+              schema:
+                items:
+                  $ref: '#/components/schemas/item'
+        '400':
+          description: Invalid status value
+		'500':
+		  description: Internal Server Error
+
+  /lists:
+    post:
+      tags:
+        - list
+      summary: all_Lists
+      description: show all Lists
+      operationId: getLists
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/list'
+		'500':
+		  description: Internal Server Error
+
+  /list:
+    post:
+      tags:
+        - list
+      summary: Create List
+      description: Create a new list
+      operationId: createlist
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/list'
+        '40':
+          description: 
+		'500':
+		  description: Internal Server Error
+
+  /list/{list_id}:
+    get:
+      tags:
+        - list
+      summary: Get List
+      description: Get List by ID
+      operationId: getlists
+      parameters:
+        - name: list_id
+          in: path
+          description: ID of List in which the item should added
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/list'          
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/list'
+        '400':
+          description: Invalid tag value
+		'500':
+		  description: Internal Server Error
+    delete:
+      tags:
+        - list
+      summary: Delete List
+      description: Delete List by ID with all their items
+      operationId: deletelists
+      parameters:
+        - name: list_id
+          in: path
+          description: ID of List in which the item should added
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/list'          
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/list'
+        '400':
+          description: Invalid tag value
+		'500':
+		  description: Internal Server Error
+
+components:
+  schemas:
+    item:
+      required:
+        - name
+        - description_item
+        - list_id
+      type: object
+      properties:
+        id:
+          type: string
+          example: 550e8400-e29b-41d4-a716-446655440000
+        name:
+          type: string
+          example: Clean
+        description_item:
+          type: string
+          example: execute order 69
+        list_id:
+          type: string
+          description: list_ID
+          example: 550e8400-e29b-41d4-a716-446655449999
+      xml:
+        name: item
+    list:
+      required:
+        - name
+      type: object
+      properties:
+        id:
+          type: string
+          example: 550e8400-e29b-41d4-a716-446655440000
+        name:
+          type: string
+          example: House
+      xml:
+        name: item
