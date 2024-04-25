@@ -146,8 +146,8 @@ paths:
             application/xml:
               schema:
                 $ref: '#/components/schemas/list'
-		'500':
-		  description: Internal Server Error
+        '500':
+          description: Internal Server Error
 
   /list:
     post:
