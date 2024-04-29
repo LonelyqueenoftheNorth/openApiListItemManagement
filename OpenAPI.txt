@@ -166,8 +166,8 @@ paths:
             application/xml:
               schema:
                 $ref: '#/components/schemas/list'
-        '40':
-          description: 
+        '400':
+          description: Invalid tag value
 		'500':
 		  description: Internal Server Error
 

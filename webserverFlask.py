@@ -77,25 +77,34 @@ def handle_list(list_id):
 
 
 # define endpoint for bind item to list
-@app.route('/list/<list_id>/item', methods=('POST'))
-def item_add(list_id):
+@app.route('/list/<list_id>/item', methods=['POST'])
+# def item_add(list_id):
 
 
 # define endpoint for creating new item in specific list
 @app.route('/list/<list_id>/item/<item_id>', methods=['DELETE', 'PATCH'])
-def delete_item(list_id, item_id):
-def update_list_item(list_id, item_id):
-    if list_id in todo_lists and item_id in todos[list_id]:
-        try:
-            request_data = request.get_json()
-            todo_lists[list_id][item_id]['name'] = request_data.get('name', todo_lists[list_id][item_id]['name'])
-            todo_lists[list_id][item_id]['beschreibung'] = request_data.get('beschreibung', todo_lists[list_id][item_id]['description'])
-            return jsonify(todo_lists[list_id][item_id]), 200
-        except Exception as e:
-            return jsonify({'message': 'Fehler beim Aktualisieren des Eintrags', 'error': str(e)}), 500
+# def delete_item(list_id, item_id):
+def update_item(list_id, item_id):
+    if request.method == "DELETE" :
+        for i in todos:
+            if i['id'] == item_id:
+                if i['list'] == list_id :
+                    print('Deleting todo item...')
+                    todos.remove(item_id)
+                    return '', 200
+    elif request.method == 'PATCH' :
+        if list_id in todo_lists and item_id in todos[list_id]:
+            try:
+                request_data = request.get_json()
+                todo_lists[list_id][item_id]['name'] = request_data.get('name', todo_lists[list_id][item_id]['name'])
+                todo_lists[list_id][item_id]['beschreibung'] = request_data.get('beschreibung', todo_lists[list_id][item_id]['description'])
+                return jsonify(todo_lists[list_id][item_id]), 200
+            except Exception as e:
+                return jsonify({'message': 'Fehler beim Aktualisieren des Eintrags', 'error': str(e)}), 500
+        else:
+            return jsonify({'message': 'Eine der IDs existiert nicht'}), 404
     else:
-        return jsonify({'message': 'Eine der IDs existiert nicht'}), 404
-
+        abort(404)
 
 if __name__ == '__main__':
     # start Flask server
