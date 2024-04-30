@@ -30,7 +30,7 @@ todos = [
 @app.after_request
 def apply_cors_header(response):
     response.headers['Access-Control-Allow-Origin'] = '*'
-    response.headers['Access-Control-Allow-Methods'] = 'GET,POST,DELETE'
+    response.headers['Access-Control-Allow-Methods'] = 'GET,POST,DELETE,PATCH'
     response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
     return response
 
@@ -41,7 +41,7 @@ def add_new_list():
     # make JSON from POST data (even if content type is not set correctly)
     new_list = request.get_json(force=True)
     print('Got new list to be added: {}'.format(new_list))
-    # create id for new list, save it and return the list with id
+    # create ID for new list, save it and return the list with ID
     new_list['id'] = uuid.uuid4()
     todo_lists.append(new_list)
     return jsonify(new_list), 200
@@ -56,35 +56,42 @@ def get_all_lists():
 # define endpoint for getting and deleting existing todo lists
 @app.route('/list/<list_id>', methods=['GET', 'DELETE', 'PATCH'])
 def handle_list(list_id):
-    # find todo list depending on given list id
+    # find todo list depending on given list ID
     list_item = None
     for l in todo_lists:
         if l['id'] == list_id:
             list_item = l
             break
-    # if the given list id is invalid, return status code 404
+    # if the given list ID is invalid, return status code 404
     if not list_item:
         abort(404)
     if request.method == 'GET':
-        # find all todo entries for the todo list with the given id
+        # find all todo entries for the todo list with the given ID
         print('Returning todo list...')
         return jsonify([i for i in todos if i['list'] == list_id])
     elif request.method == 'DELETE':
-        # delete list with given id
+        # delete the list with given ID
         print('Deleting todo list...')
         todo_lists.remove(list_item)
-        return '', 200
+        return 'list deleted', 200
 
 
 # define endpoint for bind item to list
 @app.route('/list/<list_id>/item', methods=['POST'])
-# def item_add(list_id):
+def item_add(list_id):
+    if request.method == 'POST':
+        for i in todo_lists:
+
+    else:
+        abort(500)
+
+           
+
 
 
 # define endpoint for creating new item in specific list
 @app.route('/list/<list_id>/item/<item_id>', methods=['DELETE', 'PATCH'])
-# def delete_item(list_id, item_id):
-def update_item(list_id, item_id):
+def handle_item(list_id, item_id):
     if request.method == "DELETE" :
         for i in todos:
             if i['id'] == item_id:

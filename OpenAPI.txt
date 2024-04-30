@@ -27,7 +27,7 @@ paths:
           schema:
             type: string
       requestBody:
-        description: create a new item item in a list
+        description: create a new item in a list
         content:
           application/json:
             schema:
