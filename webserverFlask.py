@@ -80,13 +80,19 @@ def handle_list(list_id):
 @app.route('/list/<list_id>/item', methods=['POST'])
 def item_add(list_id):
     if request.method == 'POST':
+        request_data = request.get_json
+        dict = {
+            'id': str(uuid.uuid4()),
+            'name': request.form.get('name'),
+            'list': list_id
+        }
         for i in todo_lists:
+            if list_id == i['id']:
+               todo_lists.insert(len(todo_lists)+1, dict)
+               return '',200
 
     else:
         abort(500)
-
-           
-
 
 
 # define endpoint for creating new item in specific list
