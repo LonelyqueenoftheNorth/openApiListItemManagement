@@ -79,8 +79,8 @@ def handle_list(list_id):
 # define endpoint for bind item to list
 @app.route('/list/<list_id>/item', methods=['POST'])
 def item_add(list_id):
+    print(list_id)
     if request.method == 'POST':
-        request_data = request.get_json
         dict = {
             'id': str(uuid.uuid4()),
             'name': request.form.get('name'),
@@ -88,11 +88,14 @@ def item_add(list_id):
         }
         for i in todo_lists:
             if list_id == i['id']:
-               todo_lists.insert(len(todo_lists)+1, dict)
-               return '',200
-
+               
+               try:
+                    todo_lists.insert(len(todo_lists)+1, dict)
+                    return jsonify({'message': 'Eintrag '+dict.get('id')+' erfolgreich angelegt.'}), 200
+               except Exception as e:
+                   return jsonify({'message': 'Fehler beim Erstellen des Eintrags', 'error': str(e)}), 500
     else:
-        abort(500)
+        abort(402)
 
 
 # define endpoint for creating new item in specific list
