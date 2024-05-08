@@ -92,7 +92,7 @@ def item_add(list_id):
                     todo_lists.insert(len(todo_lists)+1, dict)
                     return jsonify({'message': 'Eintrag '+dict.get('id')+' erfolgreich angelegt.'}), 200
                except Exception as e:
-                   return jsonify({'message': 'Fehler beim Erstellen des Eintrags', 'error': str(e)}), 
+                   return jsonify({'message': 'Fehler beim Erstellen des Eintrags, ueberpruefen Sie die angegebenen Daten', 'error': str(e)}), 
     else:
         abort(402)
 
