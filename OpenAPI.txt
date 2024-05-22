@@ -130,7 +130,7 @@ paths:
 		  description: Internal Server Error
 
   /lists:
-    post:
+    get:
       tags:
         - list
       summary: all_Lists
@@ -197,12 +197,12 @@ paths:
             application/xml:
               schema:
                 type: array
-                items:
+            -    items:
                   $ref: '#/components/schemas/list'
         '400':
           description: Invalid tag value
-		'500':
-		  description: Internal Server Error
+        '500':
+          description: Internal Server Error
     delete:
       tags:
         - list

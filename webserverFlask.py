@@ -74,7 +74,42 @@ def handle_list(list_id):
         print('Deleting todo list...')
         todo_lists.remove(list_item)
         return 'list deleted', 200
+    elif request.method == 'PATCH':
+        print('test')
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
 
 # define endpoint for bind item to list
 @app.route('/list/<list_id>/item', methods=['POST'])
@@ -94,7 +129,7 @@ def item_add(list_id):
                except Exception as e:
                    return jsonify({'message': 'Fehler beim Erstellen des Eintrags, ueberpruefen Sie die angegebenen Daten', 'error': str(e)}), 
     else:
-        abort(402)
+        abort(404)
 
 
 # define endpoint for creating new item in specific list
@@ -119,7 +154,7 @@ def handle_item(list_id, item_id):
         else:
             return jsonify({'message': 'Eine der IDs existiert nicht'}), 404
     else:
-        abort(404)
+        abort(400)
 
 if __name__ == '__main__':
     # start Flask server
