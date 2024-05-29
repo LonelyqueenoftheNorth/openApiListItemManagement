@@ -1,6 +1,22 @@
 # openApiListItemManagement
-smol program to create and manage lists of ,,what to do" :3
+This small API provides a ToDo-List management, in which you can create List of what you have to do.
+You also can update and delete them.
 
-instruction on how to use and manage the API
+## How to use
+path                      method                describtion
+/list/{list_id}           GET                   get ID from specific list
+                          DELETE                delete an entire list
 
-https://blogs.mtdv.me/blog/posts/fbAU5r9cNp
+/list                    POST                   create new list
+
+/list/{list_id}/item     POST                   create new item in list
+
+/list/{list_id}/item/
+{item_id}                PATCH                  update specific item
+                         DELETE                 delete item in list
+
+/lists                   GET                    get list of all lists
+
+/list/{list_id}          PATCH                  update list
+
+
