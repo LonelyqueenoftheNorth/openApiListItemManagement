@@ -19,4 +19,14 @@ path                      method                describtion
 
 /list/{list_id}          PATCH                  update list
 
-
+| path | method | desciption |
+|------|--------|------------|
+|   /list/{list_id}    |    GET    |      get ID from specific list      |
+|      |     DELETE     |       delete an entire list      |
+|   /list    |     POST    |      create new list      |
+|      |        |            |
+|      |        |            |
+|      |        |            |
+|      |        |            |
+|      |        |            |
+|      |        |            |
