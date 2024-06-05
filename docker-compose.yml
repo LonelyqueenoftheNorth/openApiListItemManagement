@@ -7,6 +7,3 @@ services:
       - "5000:5000"
     volumes:
       - verandb_data:/app
-
-volumes:
-  verandb_data:
